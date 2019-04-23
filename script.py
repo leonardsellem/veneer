@@ -1,17 +1,15 @@
 #The Thin Veneer of Viability
 
 class Art:
-    def __init__(self, artist, title, medium, year):
+    def __init__(self, artist, title, medium, year, owner):
         self.artist = artist
         self.title = title
         self.medium = medium
         self.year = year
+        self.owner = owner
 
     def __repr__(self):
-        return '{artist}. \"{title}\". {year}, {medium}.'.format(artist = self.artist, title = self.title, year = self.year, medium = self.medium)
-
-girl_with_mandolin = Art("Picasso, Pablo", "Girl with a Mandolin (Fanny Tellier)", "oil on canvas", 1910)
-#print(girl_with_mandolin)
+        return '{artist}. \"{title}\". {year}, {medium}. {owner}, {location}.'.format(artist = self.artist, title = self.title, year = self.year, medium = self.medium, owner = self.owner.name, location = self.owner.location)
 
 #The Marketplace of Artistic Ideas
 
@@ -28,14 +26,6 @@ class Marketplace:
         for listing in self.listings:
             print(listing)
 
-'''
-marketplace = Marketplace()
-marketplace.add_listing(girl_with_mandolin)
-marketplace.show_listings()
-marketplace.remove_listing(girl_with_mandolin)
-marketplace.show_listings()
-'''
-
 veneer = Marketplace()
 veneer.show_listings()
 
@@ -49,3 +39,14 @@ class Client():
 
 edytta = Client('Edytta Halpirt', 'Private Collection', False)
 moma = Client('The MOMA', 'New York', True)
+
+girl_with_mandolin = Art("Picasso, Pablo", "Girl with a Mandolin (Fanny Tellier)", "oil on canvas", 1910, edytta)
+#print(girl_with_mandolin)
+
+'''
+marketplace = Marketplace()
+marketplace.add_listing(girl_with_mandolin)
+marketplace.show_listings()
+marketplace.remove_listing(girl_with_mandolin)
+marketplace.show_listings()
+'''
