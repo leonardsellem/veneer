@@ -36,6 +36,11 @@ class Client():
         self.name = name
         self.location = location
         self.is_museum = is_museum
+    def sell_artwork(self, artwork, price):
+        if self != artwork.owner:
+            pass
+        else:
+            veneer.add_listing(Listing(artwork, price, self))
 
 edytta = Client('Edytta Halpirt', 'Private Collection', False)
 moma = Client('The MOMA', 'New York', True)
@@ -49,4 +54,19 @@ marketplace.add_listing(girl_with_mandolin)
 marketplace.show_listings()
 marketplace.remove_listing(girl_with_mandolin)
 marketplace.show_listings()
+'''
+
+#Don't Be Listless
+
+class Listing:
+    def __init__(self, art, price, seller):
+        self.art = art
+        self.price = price
+        self.seller = seller
+    def __repr__(self):
+        return '{name} : USD {price}.'.format(name = self.art.title, price = self.price)
+    
+'''
+edytta.sell_artwork(girl_with_mandolin, 6000000)
+veneer.show_listings()
 '''
