@@ -28,9 +28,24 @@ class Marketplace:
         for listing in self.listings:
             print(listing)
 
-#marketplace = Marketplace()
-#marketplace.add_listing(girl_with_mandolin)
-#marketplace.show_listings()
+'''
+marketplace = Marketplace()
+marketplace.add_listing(girl_with_mandolin)
+marketplace.show_listings()
+marketplace.remove_listing(girl_with_mandolin)
+marketplace.show_listings()
+'''
 
 veneer = Marketplace()
 veneer.show_listings()
+
+#We Need Clients
+
+class Client():
+    def __init__(self, name, location, is_museum):
+        self.name = name
+        self.location = location
+        self.is_museum = is_museum
+
+edytta = Client('Edytta Halpirt', 'Private Collection', False)
+moma = Client('The MOMA', 'New York', True)
