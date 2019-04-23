@@ -41,6 +41,17 @@ class Client():
             pass
         else:
             veneer.add_listing(Listing(artwork, price, self))
+    def buy_artwork(self, artwork):
+        self.artwork = artwork
+        if self.artwork.owner == self:
+            pass
+        else:
+            for listing in veneer.listings:
+                if listing.art == self.artwork:
+                    art_listing = listing
+                    self.artwork.owner = self
+                    veneer.remove_listing(art_listing)
+        
 
 edytta = Client('Edytta Halpirt', 'Private Collection', False)
 moma = Client('The MOMA', 'New York', True)
@@ -66,7 +77,11 @@ class Listing:
     def __repr__(self):
         return '{name} : USD {price}.'.format(name = self.art.title, price = self.price)
     
-'''
+
 edytta.sell_artwork(girl_with_mandolin, 6000000)
+print(girl_with_mandolin)
+
+#Buy Low, Sell High
+moma.buy_artwork(girl_with_mandolin)
+print(girl_with_mandolin)
 veneer.show_listings()
-'''
