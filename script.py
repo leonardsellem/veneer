@@ -32,10 +32,13 @@ veneer.show_listings()
 #We Need Clients
 
 class Client():
-    def __init__(self, name, location, is_museum):
+    def __init__(self, name, location, is_museum, wallet):
         self.name = name
         self.location = location
         self.is_museum = is_museum
+        self.wallet = wallet
+    def __repr__(self):
+        return "{name}, {location}. Has {wallet} in wallet.".format(name = self.name, location = self.location, wallet = self.wallet)
     def sell_artwork(self, artwork, price):
         if self != artwork.owner:
             pass
@@ -48,13 +51,16 @@ class Client():
         else:
             for listing in veneer.listings:
                 if listing.art == self.artwork:
-                    art_listing = listing
-                    self.artwork.owner = self
-                    veneer.remove_listing(art_listing)
+                    if self.wallet >= listing.price:
+                        art_listing = listing
+                        self.artwork.owner.wallet += listing.price
+                        self.artwork.owner = self
+                        self.artwork.owner.wallet -= listing.price
+                        veneer.remove_listing(art_listing)
         
 
-edytta = Client('Edytta Halpirt', 'Private Collection', False)
-moma = Client('The MOMA', 'New York', True)
+edytta = Client('Edytta Halpirt', 'Private Collection', False, 1000000)
+moma = Client('The MOMA', 'New York', True,10000000)
 
 girl_with_mandolin = Art("Picasso, Pablo", "Girl with a Mandolin (Fanny Tellier)", "oil on canvas", 1910, edytta)
 #print(girl_with_mandolin)
@@ -79,9 +85,18 @@ class Listing:
     
 
 edytta.sell_artwork(girl_with_mandolin, 6000000)
-print(girl_with_mandolin)
+#print(girl_with_mandolin)
 
 #Buy Low, Sell High
+'''
+print("Before transaction:")
+print(moma)
+print (edytta)
 moma.buy_artwork(girl_with_mandolin)
+print("After transaction:")
+print(moma)
+print (edytta)
+
 print(girl_with_mandolin)
 veneer.show_listings()
+'''
