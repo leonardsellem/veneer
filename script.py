@@ -1,4 +1,4 @@
-#The Thin Veneer of Viability
+#CLASSES
 
 class Art:
     def __init__(self, artist, title, medium, year, owner):
@@ -7,11 +7,8 @@ class Art:
         self.medium = medium
         self.year = year
         self.owner = owner
-
     def __repr__(self):
         return '{artist}. \"{title}\". {year}, {medium}. {owner}, {location}.'.format(artist = self.artist, title = self.title, year = self.year, medium = self.medium, owner = self.owner.name, location = self.owner.location)
-
-#The Marketplace of Artistic Ideas
 
 class Marketplace:
     def __init__(self):
@@ -26,10 +23,6 @@ class Marketplace:
         for listing in self.listings:
             print(listing)
 
-veneer = Marketplace()
-veneer.show_listings()
-
-#We Need Clients
 
 class Client():
     def __init__(self, name, location, is_museum, wallet):
@@ -39,24 +32,26 @@ class Client():
         self.wallet = wallet
     def __repr__(self):
         return "{name}, {location}. Has {wallet} in wallet.".format(name = self.name, location = self.location, wallet = self.wallet)
-    def sell_artwork(self, artwork, price):
+    def sell_artwork(self, artwork, price, marketplace):
+        self.marketplace = marketplace
         if self != artwork.owner:
             pass
         else:
-            veneer.add_listing(Listing(artwork, price, self))
-    def buy_artwork(self, artwork):
+            self.marketplace.add_listing(Listing(artwork, price, self, marketplace))
+    def buy_artwork(self, artwork, marketplace):
         self.artwork = artwork
+        self.marketplace = marketplace
         if self.artwork.owner == self:
             print("{name} is already the proud owner of {artwork}".format(name = self.name, artwork = self.artwork.title))
         else:
-            for listing in veneer.listings:
+            for listing in self.marketplace.listings:
                 if listing.art == self.artwork:
                     if self.wallet >= listing.price:
                         art_listing = listing
                         self.artwork.owner.wallet += listing.price
                         self.artwork.owner = self
                         self.artwork.owner.wallet -= listing.price
-                        veneer.remove_listing(art_listing)
+                        self.marketplace.remove_listing(art_listing)
                     else:
                         print("{name} cannot afford to buy {artwork}. He needs to find USD {money_needed} more.".format(name = self.name, artwork = self.artwork.title, money_needed = listing.price - self.artwork.owner.wallet))
             try:
@@ -64,50 +59,11 @@ class Client():
             except NameError:
                 print("{artwork} is not for sale at the moment. Come back and check later.".format(artwork = self.artwork.title))
             
-        
-
-edytta = Client('Edytta Halpirt', 'Private Collection', False, 1000000)
-moma = Client('The MOMA', 'New York', True,1000000)
-
-girl_with_mandolin = Art("Picasso, Pablo", "Girl with a Mandolin (Fanny Tellier)", "oil on canvas", 1910, edytta)
-
-'''
-print(girl_with_mandolin)
-
-marketplace = Marketplace()
-marketplace.add_listing(girl_with_mandolin)
-marketplace.show_listings()
-marketplace.remove_listing(girl_with_mandolin)
-marketplace.show_listings()
-'''
-
-#Don't Be Listless
-
 class Listing:
-    def __init__(self, art, price, seller):
+    def __init__(self, art, price, seller, marketplace):
         self.art = art
         self.price = price
         self.seller = seller
+        self.marketplace = marketplace
     def __repr__(self):
         return '{name} : USD {price}.'.format(name = self.art.title, price = self.price)
-    
-
-#edytta.sell_artwork(girl_with_mandolin, 6000000)
-moma.buy_artwork(girl_with_mandolin)
-#print(veneer.show_listings())
-
-#print(girl_with_mandolin)
-
-#Buy Low, Sell High
-'''
-print("Before transaction:")
-print(moma)
-print (edytta)
-moma.buy_artwork(girl_with_mandolin)
-print("After transaction:")
-print(moma)
-print (edytta)
-
-print(girl_with_mandolin)
-veneer.show_listings()
-'''
