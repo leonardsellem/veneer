@@ -47,7 +47,7 @@ class Client():
     def buy_artwork(self, artwork):
         self.artwork = artwork
         if self.artwork.owner == self:
-            pass
+            print("{name} is already the proud owner of {artwork}".format(name = self.name, artwork = self.artwork.title))
         else:
             for listing in veneer.listings:
                 if listing.art == self.artwork:
@@ -57,15 +57,23 @@ class Client():
                         self.artwork.owner = self
                         self.artwork.owner.wallet -= listing.price
                         veneer.remove_listing(art_listing)
+                    else:
+                        print("{name} cannot afford to buy {artwork}. He needs to find USD {money_needed} more.".format(name = self.name, artwork = self.artwork.title, money_needed = listing.price - self.artwork.owner.wallet))
+            try:
+                art_listing
+            except NameError:
+                print("{artwork} is not for sale at the moment. Come back and check later.".format(artwork = self.artwork.title))
+            
         
 
 edytta = Client('Edytta Halpirt', 'Private Collection', False, 1000000)
-moma = Client('The MOMA', 'New York', True,10000000)
+moma = Client('The MOMA', 'New York', True,1000000)
 
 girl_with_mandolin = Art("Picasso, Pablo", "Girl with a Mandolin (Fanny Tellier)", "oil on canvas", 1910, edytta)
-#print(girl_with_mandolin)
 
 '''
+print(girl_with_mandolin)
+
 marketplace = Marketplace()
 marketplace.add_listing(girl_with_mandolin)
 marketplace.show_listings()
@@ -84,7 +92,10 @@ class Listing:
         return '{name} : USD {price}.'.format(name = self.art.title, price = self.price)
     
 
-edytta.sell_artwork(girl_with_mandolin, 6000000)
+#edytta.sell_artwork(girl_with_mandolin, 6000000)
+moma.buy_artwork(girl_with_mandolin)
+#print(veneer.show_listings())
+
 #print(girl_with_mandolin)
 
 #Buy Low, Sell High
