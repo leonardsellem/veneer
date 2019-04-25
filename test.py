@@ -12,7 +12,7 @@ moma = Client('The MOMA', 'New York', True,10000000)
 #Artworks
 girl_with_mandolin = Art("Picasso, Pablo", "Girl with a Mandolin (Fanny Tellier)", "oil on canvas", 1910, edytta)
 
-
+#TESTS
 class TestListing(unittest.TestCase):
     def test_new_listing(self):
         test_listing = Listing(girl_with_mandolin, 1000000, edytta, veneer)
